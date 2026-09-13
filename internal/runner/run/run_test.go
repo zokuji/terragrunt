@@ -670,9 +670,8 @@ func createTempFile(t *testing.T) string {
 	t.Helper()
 
 	tmpFile, err := os.CreateTemp(helpers.TmpDirWOSymlinks(t), "")
-	if err != nil {
-		t.Fatalf("Failed to create temp directory: %s\n", err.Error())
-	}
+	require.NoError(t, err)
+	require.NoError(t, tmpFile.Close())
 
 	return tmpFile.Name()
 }
