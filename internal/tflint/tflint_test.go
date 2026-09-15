@@ -445,7 +445,13 @@ func TestRunTflintWithOpts_HappyPath(t *testing.T) {
 	// init call carries --init plus the resolved relative paths.
 	assert.Equal(
 		t,
-		[]string{"--init", "--config", filepath.FromSlash("./.tflint.hcl"), "--chdir", filepath.FromSlash("./unit")},
+		[]string{
+			"--init",
+			"--config",
+			filepath.FromSlash("./.tflint.hcl"),
+			"--chdir",
+			filepath.FromSlash("./unit"),
+		},
 		calls[0].Args,
 	)
 

@@ -70,7 +70,12 @@ func renameByHandle(oldname, newname string) error {
 		return err
 	}
 
-	setErr := windows.SetFileInformationByHandle(handle, windows.FileRenameInfoEx, &buf[0], uint32(len(buf)))
+	setErr := windows.SetFileInformationByHandle(
+		handle,
+		windows.FileRenameInfoEx,
+		&buf[0],
+		uint32(len(buf)),
+	)
 
 	return errors.Join(setErr, windows.CloseHandle(handle))
 }
@@ -95,7 +100,10 @@ func renameInfoBuffer(newPath string) ([]byte, error) {
 
 	// The length counts bytes and leaves out the terminating NUL, which the
 	// buffer still carries.
-	binary.LittleEndian.PutUint32(buf[renameInfoNameLenOffset:], uint32((len(name)-1)*utf16CharSize))
+	binary.LittleEndian.PutUint32(
+		buf[renameInfoNameLenOffset:],
+		uint32((len(name)-1)*utf16CharSize),
+	)
 
 	for i, char := range name {
 		binary.LittleEndian.PutUint16(buf[renameInfoNameOffset+i*utf16CharSize:], char)

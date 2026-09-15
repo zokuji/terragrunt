@@ -697,8 +697,12 @@ func TestResolveTerragruntInterpolation(t *testing.T) {
 		maxFoldersToCheck int
 	}{
 		{
-			str:         "terraform { source = path_relative_to_include() }",
-			configPath:  filepath.Join(venvtest.Root("/root"), "child", config.DefaultTerragruntConfigPath),
+			str: "terraform { source = path_relative_to_include() }",
+			configPath: filepath.Join(
+				venvtest.Root("/root"),
+				"child",
+				config.DefaultTerragruntConfigPath,
+			),
 			expectedOut: ".",
 		},
 		{
@@ -706,7 +710,11 @@ func TestResolveTerragruntInterpolation(t *testing.T) {
 			include: &config.IncludeConfig{
 				Path: filepath.Join("..", config.DefaultTerragruntConfigPath),
 			},
-			configPath:  filepath.Join(venvtest.Root("/root"), "child", config.DefaultTerragruntConfigPath),
+			configPath: filepath.Join(
+				venvtest.Root("/root"),
+				"child",
+				config.DefaultTerragruntConfigPath,
+			),
 			expectedOut: "child",
 		},
 		{

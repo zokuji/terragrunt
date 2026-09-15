@@ -209,10 +209,12 @@ terraform {
 			want:    "envs/stage/apps/app1\nenvs/stage/apps/app2\n",
 		},
 		{
-			name:    "path-based-absolute-exact-match",
-			files:   pathBased,
-			filters: []string{filepath.ToSlash(filepath.Join(docsRoot, "root", "envs", "dev", "apps", "*"))},
-			want:    "envs/dev/apps/app1\nenvs/dev/apps/app2\n",
+			name:  "path-based-absolute-exact-match",
+			files: pathBased,
+			filters: []string{
+				filepath.ToSlash(filepath.Join(docsRoot, "root", "envs", "dev", "apps", "*")),
+			},
+			want: "envs/dev/apps/app1\nenvs/dev/apps/app2\n",
 		},
 		{
 			name:    "path-based-braced-exact-match",
@@ -440,7 +442,11 @@ terraform {
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
 
-			assert.Equal(t, filepath.FromSlash(tc.want), findWithFilters(t, tc.files, tc.filters...))
+			assert.Equal(
+				t,
+				filepath.FromSlash(tc.want),
+				findWithFilters(t, tc.files, tc.filters...),
+			)
 		})
 	}
 }

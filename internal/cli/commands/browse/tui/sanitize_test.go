@@ -66,7 +66,12 @@ func TestHostileComponentMetadataRendersInert(t *testing.T) {
 	unit.AddDependency(component.NewUnit(repoPath("dep\x1b[2J")))
 	unit.AddDependent(component.NewUnit(repoPath("dependent\x1b[2J")))
 
-	m := newModel(t, vfs.NewMemMapFS(), tui.BuildTree(repoRoot, component.Components{unit}), tui.ColorEnabled)
+	m := newModel(
+		t,
+		vfs.NewMemMapFS(),
+		tui.BuildTree(repoRoot, component.Components{unit}),
+		tui.ColorEnabled,
+	)
 	require.Equal(t, "vpc", m.Selected().Name())
 
 	assertOnlyStylingEscapes(t, m.View().Content)
@@ -82,7 +87,12 @@ func TestHostileStackDefinitionRendersInert(t *testing.T) {
 		},
 	})
 
-	m := newModel(t, vfs.NewMemMapFS(), tui.BuildTree(repoRoot, component.Components{stack}), tui.ColorEnabled)
+	m := newModel(
+		t,
+		vfs.NewMemMapFS(),
+		tui.BuildTree(repoRoot, component.Components{stack}),
+		tui.ColorEnabled,
+	)
 	require.Equal(t, tui.KindStack, m.Selected().Kind())
 
 	assertOnlyStylingEscapes(t, m.View().Content)

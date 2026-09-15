@@ -106,7 +106,10 @@ func TestReportPanicFallbacksOnEmptyInputs(t *testing.T) {
 
 	r.ReportPanic(logger.CreateLogger(), "", "", nil, []string{})
 
-	body, err := vfs.ReadFile(fsys, filepath.Join(stubWorkDir, "terragrunt-crash-20260102T030405Z-1.log"))
+	body, err := vfs.ReadFile(
+		fsys,
+		filepath.Join(stubWorkDir, "terragrunt-crash-20260102T030405Z-1.log"),
+	)
 	require.NoError(t, err)
 
 	content := string(body)

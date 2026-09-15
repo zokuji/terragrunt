@@ -326,9 +326,12 @@ func TestGCSCredentialFileDirectStateReadSupported(t *testing.T) {
 		{name: "service account", contents: `{"type":"service_account"}`, want: true},
 		{name: "authorized user", contents: `{"type":"authorized_user"}`, want: true},
 		{
-			name:     "external account with a file source",
-			contents: fmt.Sprintf(`{"type":"external_account","credential_source":{"file":%q}}`, venvtest.Root("/var/run/token")),
-			want:     true,
+			name: "external account with a file source",
+			contents: fmt.Sprintf(
+				`{"type":"external_account","credential_source":{"file":%q}}`,
+				venvtest.Root("/var/run/token"),
+			),
+			want: true,
 		},
 		{
 			name:     "external account with a relative file source",
@@ -339,9 +342,12 @@ func TestGCSCredentialFileDirectStateReadSupported(t *testing.T) {
 			contents: `{"type":"external_account","credential_source":{"file":"~/token"}}`,
 		},
 		{
-			name:     "external account with a kubernetes token file and format",
-			contents: fmt.Sprintf(`{"type":"external_account","credential_source":{"file":%q,"format":{"type":"text"}}}`, venvtest.Root("/var/run/service-account/token")),
-			want:     true,
+			name: "external account with a kubernetes token file and format",
+			contents: fmt.Sprintf(
+				`{"type":"external_account","credential_source":{"file":%q,"format":{"type":"text"}}}`,
+				venvtest.Root("/var/run/service-account/token"),
+			),
+			want: true,
 		},
 		{
 			name:     "external account with a url source and headers",

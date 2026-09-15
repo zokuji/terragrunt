@@ -35,7 +35,9 @@ func TestInitDeliversDiscoveryResultWithRacing(t *testing.T) {
 		warnCh,
 	)
 
-	want := tui.DiscoveryResult{Components: component.Components{component.NewUnit(repoPath("vpc"))}}
+	want := tui.DiscoveryResult{
+		Components: component.Components{component.NewUnit(repoPath("vpc"))},
+	}
 
 	go func() { resultCh <- want }()
 

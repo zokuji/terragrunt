@@ -23,7 +23,12 @@ func TestUnitPreviewShowsMetadataAndRelationships(t *testing.T) {
 	unit.AddDependency(component.NewUnit(repoPath("db")))
 	unit.AddDependent(component.NewUnit(repoPath("app")))
 
-	m := newModel(t, vfs.NewMemMapFS(), tui.BuildTree(repoRoot, component.Components{unit}), tui.ColorDisabled)
+	m := newModel(
+		t,
+		vfs.NewMemMapFS(),
+		tui.BuildTree(repoRoot, component.Components{unit}),
+		tui.ColorDisabled,
+	)
 	require.Equal(t, "vpc", m.Selected().Name())
 
 	content := m.View().Content
@@ -54,7 +59,12 @@ func TestStackPreviewListsDefinedUnitsAndStacks(t *testing.T) {
 		},
 	})
 
-	m := newModel(t, vfs.NewMemMapFS(), tui.BuildTree(repoRoot, component.Components{stack}), tui.ColorDisabled)
+	m := newModel(
+		t,
+		vfs.NewMemMapFS(),
+		tui.BuildTree(repoRoot, component.Components{stack}),
+		tui.ColorDisabled,
+	)
 	require.Equal(t, "live", m.Selected().Name())
 	require.Equal(t, tui.KindStack, m.Selected().Kind())
 

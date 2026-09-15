@@ -370,7 +370,11 @@ func TestParentPathHasSymlink(t *testing.T) {
 	t.Run("absolute relative path is unsafe", func(t *testing.T) {
 		t.Parallel()
 
-		hasSymlink, err := vfs.ParentPathHasSymlink(vfs.NewMemMapFS(), "/root", venvtest.Root("/root/file.txt"))
+		hasSymlink, err := vfs.ParentPathHasSymlink(
+			vfs.NewMemMapFS(),
+			"/root",
+			venvtest.Root("/root/file.txt"),
+		)
 
 		require.NoError(t, err)
 		assert.True(t, hasSymlink)
@@ -1054,7 +1058,10 @@ func TestWalkDir(t *testing.T) {
 		root := filepath.FromSlash("/root")
 
 		memFs := vfs.NewMemMapFS()
-		require.NoError(t, vfs.WriteFile(memFs, filepath.Join(root, "dir", "nested.txt"), []byte("n"), 0644))
+		require.NoError(
+			t,
+			vfs.WriteFile(memFs, filepath.Join(root, "dir", "nested.txt"), []byte("n"), 0644),
+		)
 		require.NoError(t, vfs.WriteFile(memFs, filepath.Join(root, "top.txt"), []byte("t"), 0644))
 
 		var paths []string
@@ -1110,8 +1117,14 @@ func TestWalkDir(t *testing.T) {
 		root := filepath.FromSlash("/root")
 
 		memFs := vfs.NewMemMapFS()
-		require.NoError(t, vfs.WriteFile(memFs, filepath.Join(root, "skip", "hidden.txt"), []byte("h"), 0644))
-		require.NoError(t, vfs.WriteFile(memFs, filepath.Join(root, "keep", "visible.txt"), []byte("v"), 0644))
+		require.NoError(
+			t,
+			vfs.WriteFile(memFs, filepath.Join(root, "skip", "hidden.txt"), []byte("h"), 0644),
+		)
+		require.NoError(
+			t,
+			vfs.WriteFile(memFs, filepath.Join(root, "keep", "visible.txt"), []byte("v"), 0644),
+		)
 
 		var paths []string
 

@@ -352,7 +352,10 @@ func TestFileCopyGetterCopiesDirOnMemFS(t *testing.T) {
 
 	fsys := vfs.NewMemMapFS()
 	require.NoError(t, fsys.MkdirAll(src, 0o755))
-	require.NoError(t, vfs.WriteFile(fsys, filepath.Join(src, "main.tf"), []byte("# module"), 0o644))
+	require.NoError(
+		t,
+		vfs.WriteFile(fsys, filepath.Join(src, "main.tf"), []byte("# module"), 0o644),
+	)
 
 	g := getter.NewFileCopyGetter(fsys).WithLogger(logger.CreateLogger())
 

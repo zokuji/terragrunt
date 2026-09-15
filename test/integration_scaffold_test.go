@@ -411,7 +411,9 @@ func TestScaffoldNoDependencyPrompt(t *testing.T) {
 	workingDir, err := os.Getwd()
 	require.NoError(t, err)
 
-	localBoilerplateModuleDir := helpers.FileURL(filepath.Join(workingDir, testScaffoldNoDependencyPrompt)) + "//."
+	localBoilerplateModuleDir := helpers.FileURL(
+		filepath.Join(workingDir, testScaffoldNoDependencyPrompt),
+	) + "//."
 
 	outputFolder := tmpEnvPath + "/foo/bar"
 	_, stderr, err := helpers.RunTerragruntCommandWithOutput(

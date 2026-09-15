@@ -625,14 +625,19 @@ func TestUnitPathsFromStackDir_FuncFactoryRebuiltPerNestedDir(t *testing.T) {
 	fs := vfs.NewMemMapFS()
 	stackDir := venvtest.Root("/test")
 	require.NoError(t, fs.MkdirAll(stackDir, 0755))
-	require.NoError(t, vfs.WriteFile(fs, filepath.Join(stackDir, "terragrunt.stack.hcl"), []byte(`stack "more" {
+	require.NoError(
+		t,
+		vfs.WriteFile(fs, filepath.Join(stackDir, "terragrunt.stack.hcl"), []byte(`stack "more" {
   source = "."
   path   = "more"
 }
 `), 0644))
 	require.NoError(
 		t,
-		vfs.WriteFile(fs, filepath.Join(stackDir, ".terragrunt-stack", "more", "terragrunt.stack.hcl"), []byte(`unit "deep" {
+		vfs.WriteFile(
+			fs,
+			filepath.Join(stackDir, ".terragrunt-stack", "more", "terragrunt.stack.hcl"),
+			[]byte(`unit "deep" {
   source = "."
   path   = "deep"
 }
@@ -646,7 +651,11 @@ func TestUnitPathsFromStackDir_FuncFactoryRebuiltPerNestedDir(t *testing.T) {
 		return map[string]function.Function{}, nil
 	}
 
-	_, err := hclparse.UnitPathsFromStackDir(fs, stackDir, &hclparse.StackDirArgs{FuncsFor: funcsFor})
+	_, err := hclparse.UnitPathsFromStackDir(
+		fs,
+		stackDir,
+		&hclparse.StackDirArgs{FuncsFor: funcsFor},
+	)
 	require.NoError(t, err)
 
 	nested := filepath.Join(stackDir, ".terragrunt-stack", "more")
@@ -665,7 +674,9 @@ func TestUnitPathsFromStackDir_NilFuncsFactoryMapPanics(t *testing.T) {
 	fs := vfs.NewMemMapFS()
 	stackDir := venvtest.Root("/test")
 	require.NoError(t, fs.MkdirAll(stackDir, 0755))
-	require.NoError(t, vfs.WriteFile(fs, filepath.Join(stackDir, "terragrunt.stack.hcl"), []byte(`unit "vpc" {
+	require.NoError(
+		t,
+		vfs.WriteFile(fs, filepath.Join(stackDir, "terragrunt.stack.hcl"), []byte(`unit "vpc" {
   source = "."
   path   = "vpc"
 }
@@ -675,10 +686,18 @@ func TestUnitPathsFromStackDir_NilFuncsFactoryMapPanics(t *testing.T) {
 		return nil, nil
 	}
 
-	assert.PanicsWithValue(t,
-		fmt.Sprintf("hclparse.UnitPathsFromStackDir: funcsFor returned a nil map (stackDir=%q)", stackDir),
+	assert.PanicsWithValue(
+		t,
+		fmt.Sprintf(
+			"hclparse.UnitPathsFromStackDir: funcsFor returned a nil map (stackDir=%q)",
+			stackDir,
+		),
 		func() {
-			_, _ = hclparse.UnitPathsFromStackDir(fs, stackDir, &hclparse.StackDirArgs{FuncsFor: nilMapFactory})
+			_, _ = hclparse.UnitPathsFromStackDir(
+				fs,
+				stackDir,
+				&hclparse.StackDirArgs{FuncsFor: nilMapFactory},
+			)
 		},
 	)
 }
@@ -875,7 +894,10 @@ func TestParseStackFileFromPath_StackDirIsFileReturnsError(t *testing.T) {
 
 		fsys := vfs.NewMemMapFS()
 		filePath := venvtest.Root("/stack/another-name.hcl")
-		require.NoError(t, vfs.WriteFile(fsys, filePath, []byte(`# regular file, not a directory`), 0644))
+		require.NoError(
+			t,
+			vfs.WriteFile(fsys, filePath, []byte(`# regular file, not a directory`), 0644),
+		)
 
 		result, err := hclparse.ParseStackFileFromPath(fsys, filePath)
 		assert.Nil(t, result)

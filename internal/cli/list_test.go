@@ -89,7 +89,11 @@ unit  units/live/prod/ec2  units/live/prod/db, units/live/prod/vpc
 unit  units/live/prod/vpc
 `
 
-		assert.Equal(t, filepath.FromSlash(want), runList(t, queueUnits, "--long", "--dependencies"))
+		assert.Equal(
+			t,
+			filepath.FromSlash(want),
+			runList(t, queueUnits, "--long", "--dependencies"),
+		)
 	})
 }
 

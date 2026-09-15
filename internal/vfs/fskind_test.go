@@ -38,7 +38,11 @@ func TestDetectFSKind(t *testing.T) {
 		missing := filepath.Join(parent, "no-such-dir", "deeper")
 
 		assert.NotEqual(t, vfs.FSUnknown, vfs.DetectFSKind(vfs.NewOSFS(), missing))
-		assert.Equal(t, vfs.FSWorkersFor(vfs.NewOSFS(), parent), vfs.FSWorkersFor(vfs.NewOSFS(), missing))
+		assert.Equal(
+			t,
+			vfs.FSWorkersFor(vfs.NewOSFS(), parent),
+			vfs.FSWorkersFor(vfs.NewOSFS(), missing),
+		)
 	})
 
 	t.Run("a filesystem that is not the real disk never reaches the kernel", func(t *testing.T) {

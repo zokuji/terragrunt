@@ -239,7 +239,11 @@ func TestTerraformCommandHookUsesCacheWhenImplementationsShareConfig(t *testing.
 	require.NotEmpty(t, invocations)
 
 	for _, inv := range invocations {
-		assert.Contains(t, strings.Join(inv.Env, "\x00"), "TF_CLI_CONFIG_FILE="+filepath.Join(workDir, ".terraformrc"))
+		assert.Contains(
+			t,
+			strings.Join(inv.Env, "\x00"),
+			"TF_CLI_CONFIG_FILE="+filepath.Join(workDir, ".terraformrc"),
+		)
 	}
 }
 

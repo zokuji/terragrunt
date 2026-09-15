@@ -621,7 +621,14 @@ func TestCopyFolderContentsSkipsSourceManifest(t *testing.T) {
 		{
 			name: "filtered copy",
 			copy: func(l tglog.Logger, src, dst string) error {
-				return util.CopyFolderContentsWithFilter(l, vfs.NewOSFS(), src, dst, testManifestName, acceptAll)
+				return util.CopyFolderContentsWithFilter(
+					l,
+					vfs.NewOSFS(),
+					src,
+					dst,
+					testManifestName,
+					acceptAll,
+				)
 			},
 		},
 		{
@@ -647,7 +654,11 @@ func TestCopyFolderContentsSkipsSourceManifest(t *testing.T) {
 
 			require.NoError(t, tc.copy(logger.CreateLogger(), src, dst))
 
-			assert.Equal(t, []manifestTestEntry{manifestFile(filepath.Join(dst, "main.tf"))}, readManifest(t, filepath.Join(dst, testManifestName)))
+			assert.Equal(
+				t,
+				[]manifestTestEntry{manifestFile(filepath.Join(dst, "main.tf"))},
+				readManifest(t, filepath.Join(dst, testManifestName)),
+			)
 		})
 	}
 }
@@ -1232,7 +1243,14 @@ func Test_sanitizePath(t *testing.T) {
 
 			require.NoError(t, err)
 
-			assert.Equalf(t, filepath.FromSlash(tt.want), got, "sanitizePath(%v, %v)", tt.baseDir, tt.file)
+			assert.Equalf(
+				t,
+				filepath.FromSlash(tt.want),
+				got,
+				"sanitizePath(%v, %v)",
+				tt.baseDir,
+				tt.file,
+			)
 		})
 	}
 }

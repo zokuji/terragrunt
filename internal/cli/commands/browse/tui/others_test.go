@@ -88,7 +88,10 @@ func TestIgnorableDirsClassifiedAsPlain(t *testing.T) {
 	// A terragrunt.hcl inside .terragrunt-cache is a cache copy discovery never
 	// scans; neither the cache dir nor anything beneath it may classify as a unit.
 	fs := vfs.NewMemMapFS()
-	require.NoError(t, vfs.WriteFile(fs, repoPath(".terragrunt-cache/xyz/terragrunt.hcl"), nil, 0o644))
+	require.NoError(
+		t,
+		vfs.WriteFile(fs, repoPath(".terragrunt-cache/xyz/terragrunt.hcl"), nil, 0o644),
+	)
 
 	m := newModel(t, fs, tui.NewRoot(repoRoot), tui.ColorDisabled)
 
@@ -132,7 +135,10 @@ func TestSurroundingEntriesBestEffortOnError(t *testing.T) {
 	// entries fails; the tree keeps just the discovered component.
 	fs := vfs.NewMemMapFS()
 	missingRoot := venvtest.Root("/missing")
-	root := tui.BuildTree(missingRoot, component.Components{component.NewUnit(filepath.Join(missingRoot, "vpc"))})
+	root := tui.BuildTree(
+		missingRoot,
+		component.Components{component.NewUnit(filepath.Join(missingRoot, "vpc"))},
+	)
 
 	m := newModel(t, fs, root, tui.ColorDisabled)
 

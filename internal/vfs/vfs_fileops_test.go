@@ -422,7 +422,11 @@ func TestRenameOver(t *testing.T) {
 
 		info, err := fsys.Stat(blob)
 		require.NoError(t, err)
-		assert.Zero(t, info.Mode().Perm()&0o222, "the blob behind the replaced link must stay read-only")
+		assert.Zero(
+			t,
+			info.Mode().Perm()&0o222,
+			"the blob behind the replaced link must stay read-only",
+		)
 	})
 
 	t.Run("replaces a destination on MemMapFS", func(t *testing.T) {
@@ -444,7 +448,11 @@ func TestRenameOver(t *testing.T) {
 
 		dir := t.TempDir()
 
-		err := vfs.RenameOver(vfs.NewOSFS(), filepath.Join(dir, "missing"), filepath.Join(dir, "target"))
+		err := vfs.RenameOver(
+			vfs.NewOSFS(),
+			filepath.Join(dir, "missing"),
+			filepath.Join(dir, "target"),
+		)
 
 		require.ErrorIs(t, err, fs.ErrNotExist)
 	})
@@ -452,7 +460,11 @@ func TestRenameOver(t *testing.T) {
 	t.Run("a filesystem without the capability uses its own Rename", func(t *testing.T) {
 		t.Parallel()
 
-		err := vfs.RenameOver(afero.NewReadOnlyFs(vfs.NewMemMapFS()), "/data/source", "/data/target")
+		err := vfs.RenameOver(
+			afero.NewReadOnlyFs(vfs.NewMemMapFS()),
+			"/data/source",
+			"/data/target",
+		)
 
 		require.ErrorIs(t, err, syscall.EPERM)
 	})
